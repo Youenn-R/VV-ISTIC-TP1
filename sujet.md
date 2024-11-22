@@ -45,4 +45,16 @@ Ces expériences ont conduit les ingénieurs de Netflix à concevoir des service
 Par exemple, ces expériences pourraient être appliquées chez Amazon. De manière similaire, ils pourraient tester la résilience en éteignant des instances de services ou en simulant des défaillances de régions AWS. Ils pourraient également simuler des erreurs avec les intermédiaires de paiement. Les métriques à observer pourraient être le nombre d'achats par minute ou le nombre d'ajouts au panier, pour regarder si le systeme reste stable.
 
 4.
-5.
+5.La spécification mécanisée offre une preuve complète et rigoureuse de la solidité du système.
+
+Ce travail a permis de détecter des erreurs dans la spécification officielle, notamment des incohérences dans les règles de typage. Ces observations ont reconnus et résolu par le groupe de travail officiel.
+Les 3 principales sont :
+Les règles de propagation des exceptions ont été revues pour éviter des blocages imprévus
+L’opération Return a été retravaillée pour corriger des erreurs dans son typage
+Les invariants définissant les fonctions hôtes ont été renforcés pour garantir qu’ils n’entraînent pas de comportements imprévus ou d’erreurs à l’exécution.
+
+La spécification a permis de développer des outils exécutables fiables : 
+Un vérificateur de types vérifié, qui garantit que les programmes WebAssembly respectent les règles de typage 
+Un interpréteur vérifié, qui assure une exécution fidèle aux sémantiques spécifiées.
+
+La vérification a été réalisée à l’aide de l’outil formel Isabelle. Il y a eu un test de fait de l'interpreteur executable contre des moteurs majeur de WebAssembly. Pour à la fois validé l'interpreteur et de verrifier qu'il n'y ai pas de bug dans les outils commerciaux.  
