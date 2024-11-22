@@ -26,6 +26,23 @@ Prévention possible :
 Étant donné que le problème provenait d’un dépassement de limite causé par une modification dans les données fournies, des tests de dépassement de limites ou de compatibilité sur les mises à jour des drivers auraient probablement permis de détecter l’anomalie avant son déploiement.
 
 2.
+Description :
+Le bug choisi est le ticket [COLLECTIONS-802](https://issues.apache.org/jira/browse/COLLECTIONS-802). Nous trouvons plus de détails de sa résolution sur la [pull request github](https://github.com/apache/commons-collections/pull/300).
+Il s'agit d'un bug local. Il est reporté un mauvais comportement
+de la fonction hasNext, qui, lorsqu'elle retourne false, elle met à jour la valeur currentValue qui devrait pourtant rester à la valeur précédente (puisqu'il s'agit de la fonction hasNext et non next.) Nous nous retrouvons donc avec une valeur currentValue à null. 
 
+Solution adoptée : 
+Pour corriger le bug, les lignes donnant la valeur null aux valeurs courantes ont été retirés. De plus, ils ont aussi corrigés leurs dépendances du pom. Cependant, ces modifications ont fait apparaître des échecs dans les tests unitaires que les contributeurs sont venus corriger. 
+Il n'y a pas eu de nouveaux tests à ajouter, les simples tests de non régression déjà existants et corrigés suffisent à vérifier si ce problème viendrait à réapparaître.
 
 3.
+Chaos Monkey : Termine aléatoirement des instances de machines virtuelles hébergeant des services Netflix pour tester si l'arrêt d'une instance unique ne compromet pas le service. Ce test fonctionne de manière continue durant les jours de la semaine.
+Chaos Kong : Simule la défaillance d'une région Amazon EC2 entière. Ce test est effectué une fois par mois.
+Failure Injection Testing (FIT) : Des exercices où les requêtes entre les services de Netflix échouent volontairement afin de vérifier que, malgré ces pannes, le système se dégrade de manière maîtrisée (graceful degradation).
+Pour rendre ces expériences pertinentes, il est important d'utiliser des données de test réalistes, voire de vraies données.
+Netflix se base principalement sur la métrique de "Stream Starts per Second" (SPS), qui mesure le nombre de flux démarrés par seconde, pour vérifier l'état stable du système. Cette métrique est prévisible à une heure donnée. D'autres indicateurs, comme la latence des requêtes ou l'utilisation du processeur, peuvent révéler une dégradation des services, même si, du point de vue utilisateur, le système semble fonctionner correctement.
+Ces expériences ont conduit les ingénieurs de Netflix à concevoir des services plus résilients. Ils adaptent leurs méthodes de développement en intégrant ces tests pour anticiper et gérer les éventuels problèmes réels.
+Par exemple, ces expériences pourraient être appliquées chez Amazon. De manière similaire, ils pourraient tester la résilience en éteignant des instances de services ou en simulant des défaillances de régions AWS. Ils pourraient également simuler des erreurs avec les intermédiaires de paiement. Les métriques à observer pourraient être le nombre d'achats par minute ou le nombre d'ajouts au panier, pour regarder si le systeme reste stable.
+
+4.
+5.
