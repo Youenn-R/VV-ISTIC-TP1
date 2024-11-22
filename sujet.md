@@ -11,3 +11,21 @@
 5.  Shortly after the appearance of WebAssembly another paper proposed a mechanized specification of the language using Isabelle. The paper can be consulted here: https://www.cl.cam.ac.uk/~caw77/papers/mechanising-and-verifying-the-webassembly-specification.pdf. This mechanized specification complements the first formalization attempt from the paper. According to the author of this second paper, what are the main advantages of the mechanized specification? Did it help improving the original formal specification of the language? What other artifacts were derived from this mechanized specification? How did the author verify the specification? Does this new specification removes the need for testing?
 
 ## Answers
+
+1.
+Description
+Un fichier de driver mal formaté a été inclus dans une mise à jour de sécurité pour CrowdStrike Falcon Sensor sur les services Azure. Le fichier contenait 21 entrées, alors que l’agent attendait seulement 20 entrées. Cela a provoqué une lecture hors limite, entraînant un "écran bleu de la mort" (BSOD).
+
+Impact sur les clients :
+Le bug était global, affectant de nombreuses entreprises dépendantes des services Azure. Les systèmes des clients ont été arrêtés, obligeant les équipes à redémarrer les machines manuellement. Cela a causé des interruptions importantes des activités, entraînant des pertes.
+
+Conséquences pour CrowdStrike et Azure :
+Pour CrowdStrike et Microsoft, ce bug a probablement entraîné une perte de confiance chez les clients, des coûts de support technique pour résoudre le problème, et des critiques sur la qualité des tests réalisés avant la publication de la mise à jour.
+
+Prévention possible :
+Étant donné que le problème provenait d’un dépassement de limite causé par une modification dans les données fournies, des tests de dépassement de limites ou de compatibilité sur les mises à jour des drivers auraient probablement permis de détecter l’anomalie avant son déploiement.
+
+2.
+
+
+3.
